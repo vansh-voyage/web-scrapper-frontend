@@ -1,18 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         fullname: '',
         email: '',
         username: '',
         password: '',
     });
-
-    
-
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,21 +21,18 @@ const Signup = () => {
         const { email, password, fullname, username } = formData;
 
         try {
-            const response = await fetch('http://13.126.154.115:5000/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    
-                },
-                body: JSON.stringify({ email, password, fullname, username }),
+            const response = await axios.post(`${API_URL}/register`, {
+                email, 
+                password, 
+                fullname, 
+                username,
             });
 
-            const data = await response.json();
-            if (response.ok) {
-                console.log('User signed up:', data);
-                navigate('/login'); // Navigate to the login page on successful signup
+            if (response.status === 200) {
+                console.log('User signed up:', response.data);
+                navigate('/login');
             } else {
-                console.error('Error signing up:', data.message);
+                console.error('Error signing up:', response.data.message);
             }
         } catch (error) {
             console.error('Error signing up:', error);
@@ -48,7 +43,7 @@ const Signup = () => {
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-8">
                 <h1 className="text-2xl font-bold text-center">Signup</h1>
-                <br></br>
+                <br />
 
                 <p className="text-center text-gray-600 mb-4">Create an account</p>
 

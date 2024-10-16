@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { marked } from 'marked';
-import DOMPurify from 'dompurify'; // For sanitizing HTML
+import DOMPurify from 'dompurify';
+import API_URL from './config';
 
 const LinkedInScraper = () => {
   const [email, setEmail] = useState('');
@@ -18,26 +20,16 @@ const LinkedInScraper = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://13.126.154.115:5000/scrape_linkedin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': token
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          query: query,
-        }),
+      const response = await axios.post(`${API_URL}/scrape_linkedin`, {
+        email, 
+        password, 
+        query
+      }, {
+        headers: { 'x-access-token': token }
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();  // Parse response as JSON
-      if (data) {
-        setOutput(formatOutput(data));
+      if (response.data) {
+        setOutput(formatOutput(response.data));
       } else {
         setOutput('No valid profile data found.');
       }
@@ -95,7 +87,7 @@ const LinkedInScraper = () => {
       }
     }
 
-    return <>{outputElements}</>;  // Return the rendered output
+    return <>{outputElements}</>;
   };
 
   return (
@@ -155,4 +147,3 @@ const LinkedInScraper = () => {
 };
 
 export default LinkedInScraper;
-

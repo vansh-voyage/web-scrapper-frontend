@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import API_URL from './config'
 const TwitterScraper = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [hashtag, setHashtag] = useState('');
     const [mobileNumber, setMobileNumber] = useState('');
+    const [numposts,setnumposts] = useState('')
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -17,26 +18,27 @@ const TwitterScraper = () => {
         const trimmedPassword = password.trim();
         const trimmedMobileNumber = mobileNumber.trim();
         const trimmedHashtag = hashtag.trim();
-
-        if (!trimmedUsername || !trimmedPassword || !trimmedMobileNumber || !trimmedHashtag) {
-            alert("Please fill in all fields (username, password, hashtag, mobile number)");
+        const trimmednumposts = parseInt(numposts.trim(), 10);  // Convert to number
+    
+        if (!trimmedUsername || !trimmedPassword || !trimmedMobileNumber || !trimmedHashtag || isNaN(trimmednumposts)) {
+            alert("Please fill in all fields (username, password, hashtag, mobile number, number of posts)");
             return;
         }
-
+    
         setLoading(true);
         try {
-            const response = await axios.post('http://13.126.154.115:5000/scrape_twitter', { 
+            const response = await axios.post(`${API_URL}/scrape_twitter`, { 
                 username: trimmedUsername,
                 password: trimmedPassword,
                 mobile_number: trimmedMobileNumber,
                 hashtag: trimmedHashtag,
-                desired_posts: 50 
-            },{
+                desired_posts: trimmednumposts  // Send as number
+            }, {
                 headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': token, // Include the token in the Authorization header
+                    'Content-Type': 'application/json',
+                    'x-access-token': token,
                 },
-        });
+            });
             setPosts(response.data);
         } catch (error) {
             if (error.response) {
@@ -50,6 +52,7 @@ const TwitterScraper = () => {
             setLoading(false);
         }
     };
+    
 
     const convertToCSV = (objArray) => {
         const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
@@ -113,12 +116,19 @@ const TwitterScraper = () => {
                     placeholder="Enter the hashtag (without #)"
                     className="w-full p-4 text-lg border-2 border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
+                <input
+                    type="text"
+                    value={numposts}
+                    onChange={(e) => setnumposts(e.target.value)}
+                    placeholder="Enter the no. of posts"
+                    className="w-full p-4 text-lg border-2 border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
             </div>
 
             <button 
                 className={`mt-6 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-300 ${!hashtag.trim() || !username.trim() || !password.trim() || !mobileNumber.trim() ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={handleScrape} 
-                disabled={loading || !hashtag.trim() || !username.trim() || !password.trim() || !mobileNumber.trim()}
+                disabled={loading || !hashtag.trim() || !username.trim() || !password.trim() || !mobileNumber.trim() || !numposts.trim()}
             >
                 {loading ? "Scraping..." : "Start Scraping"}
             </button>
