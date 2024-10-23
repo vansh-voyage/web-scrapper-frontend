@@ -10,6 +10,7 @@ import LinkedInScraper from './pages/LinkedInScraper';
 import SignUp from './pages/Signup';
 import Login from './pages/Login';
 import PrivateRoute from './components/PrivateRoute';
+import YoutubeScraper from './pages/Youtube';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/instagram" element={<PrivateRoute><InstagramScraper /></PrivateRoute>} />
             <Route path="/twitter" element={<PrivateRoute><TwitterScraper /></PrivateRoute>} />
             <Route path="/linkedin" element={<PrivateRoute><LinkedInScraper /></PrivateRoute>} />
+            <Route path="/youtube" element={<PrivateRoute><YoutubeScraper /></PrivateRoute>} />
           </Routes>
         </main>
         <Footer />

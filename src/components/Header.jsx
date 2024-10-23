@@ -66,6 +66,7 @@ const Header = () => {
           <li><Link to="/instagram" className="hover:text-secondary transition-colors duration-300">Instagram</Link></li>
           <li><Link to="/twitter" className="hover:text-secondary transition-colors duration-300">Twitter</Link></li>
           <li><Link to="/linkedin" className="hover:text-secondary transition-colors duration-300">LinkedIn</Link></li>
+          <li><Link to="/youtube" className="hover:text-secondary transition-colors duration-300">Youtube</Link></li>
         </ul>
         <div className="flex space-x-4">
           {/* Conditionally render buttons based on authentication */}
