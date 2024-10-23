@@ -42,8 +42,8 @@ const Login = () => {
   const handleGoogleLogin = () => {
     account.createOAuth2Session(
       "google",
-      `${API_URL}/home`,
-      `${API_URL}/login`
+      "https://master.d1lnzmm8oled13.amplifyapp.com/",
+      "https://master.d1lnzmm8oled13.amplifyapp.com/login"
     );
   };
 
