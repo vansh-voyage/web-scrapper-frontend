@@ -42,8 +42,8 @@ const Login = () => {
   const handleGoogleLogin = () => {
     account.createOAuth2Session(
       "google",
-      `${API_URL}/`,
-      "${API_URL}/login"
+      `${API_URL}/home`,
+      `${API_URL}/login`
     );
   };
 
