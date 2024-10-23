@@ -116,7 +116,7 @@ const Login = () => {
   const handleGoogleLogin = () => {
     account.createOAuth2Session(
       "google",
-      "https://master.d1lnzmm8oled13.amplifyapp.com/home",
+      "https://cloud.appwrite.io/v1/account/sessions/oauth2/callback/google/6718e0ec0026a7ad41cb",
       "https://master.d1lnzmm8oled13.amplifyapp.com/login"
     );
   };
