@@ -116,8 +116,8 @@ const Login = () => {
   const handleGoogleLogin = () => {
     account.createOAuth2Session(
       "google",
-      "http://localhost:3000/home",
-      "http://localhost:3000/login"
+      "https://master.d1lnzmm8oled13.amplifyapp.com/home",
+      "https://master.d1lnzmm8oled13.amplifyapp.com/login"
     );
   };
 
