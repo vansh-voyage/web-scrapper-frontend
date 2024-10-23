@@ -42,7 +42,7 @@ const Login = () => {
   const handleGoogleLogin = () => {
     account.createOAuth2Session(
       "google",
-      "https://master.d1lnzmm8oled13.amplifyapp.com/",
+      "https://master.d1lnzmm8oled13.amplifyapp.com/home",
       "https://master.d1lnzmm8oled13.amplifyapp.com/login"
     );
   };
