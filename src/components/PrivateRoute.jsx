@@ -5,7 +5,10 @@ import { toast } from 'react-toastify';
 import { Client, Account } from 'appwrite';
 
 const client = new Client();
-client.setEndpoint("https://cloud.appwrite.io/v1").setProject("6718e0ec0026a7ad41cb");
+// client.setEndpoint("https://cloud.appwrite.io/v1").setProject("6718e0ec0026a7ad41cb");
+client
+  .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 const account = new Account(client);
 
 const PrivateRoute = ({ children }) => {
