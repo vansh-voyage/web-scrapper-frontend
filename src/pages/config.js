@@ -1,9 +1,6 @@
 
 
-// ECS deployed Environment
-//const API_URL = "http://35.154.171.198:5000";
-// const API_URL = "https://scrap-bot-j67k.onrender.com"
-// Local Environment setup
-const API_URL = "http://127.0.0.1:5000";
-
+// Render Deployed Backend
+//const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = "https://scrap-bot-j67k.onrender.com";
 export default API_URL;
