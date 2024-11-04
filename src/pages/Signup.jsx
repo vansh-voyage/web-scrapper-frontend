@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import API_URL from './config';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -22,19 +25,26 @@ const Signup = () => {
 
         try {
             const response = await axios.post(`${API_URL}/register`, {
-                email, 
-                password, 
-                fullname, 
+                email,
+                password,
+                fullname,
                 username,
             });
 
-            if (response.status === 200) {
-                console.log('User signed up:', response.data);
-                navigate('/login');
-            } else {
-                console.error('Error signing up:', response.data.message);
+            if (response.status === 201) { // 201 for successful creation
+                toast.success("Signup successful!");
+                
+                // Delay navigation to allow the toast to be visible
+                setTimeout(() => {
+                    navigate('/login');
+                }, 1000); 
             }
         } catch (error) {
+            if (error.response && error.response.data.message) {
+                toast.error(error.response.data.message); // Show specific error message
+            } else {
+                toast.error("An error occurred during signup. Please try again.");
+            }
             console.error('Error signing up:', error);
         }
     };
@@ -44,7 +54,6 @@ const Signup = () => {
             <div className="bg-white shadow-md rounded-lg w-full max-w-lg p-8">
                 <h1 className="text-2xl font-bold text-center">Signup</h1>
                 <br />
-
                 <p className="text-center text-gray-600 mb-4">Create an account</p>
 
                 <form onSubmit={signUpWithEmail}>
